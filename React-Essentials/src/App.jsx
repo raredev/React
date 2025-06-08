@@ -1,4 +1,5 @@
 import reactImg from "./assets/react-core-concepts.png"; // Importing Images for optimization
+import { CORE_CONCEPTS } from "./data";
 
 const keywordItems = ["Fundamental", "Core", "Basic"];
 
@@ -36,15 +37,14 @@ function App() {
           <h2>Core Concepts</h2>
           <ul>
             <CoreConcept
-              title="Components"
-              description="Short Description about Components"
-              image={reactImg}
+              title={CORE_CONCEPTS[0].title}
+              description={CORE_CONCEPTS[0].description}
+              image={CORE_CONCEPTS[0].image}
             />
-            <CoreConcept
-              title="JSX"
-              description="Short Description about JSX"
-              image={reactImg}
-            />
+            {/* Or Alternatively if object has same key that matches the props */}
+            <CoreConcept {...CORE_CONCEPTS[1]} />
+            <CoreConcept {...CORE_CONCEPTS[2]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} />
           </ul>
         </section>
       </main>
