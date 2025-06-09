@@ -4,8 +4,8 @@ import TabButton from "./components/TabButton/TabButton";
 import { CORE_CONCEPTS } from "./data";
 
 function App() {
-  function OnSelectHandler() {
-    console.log("Custom Handler was clicked!");
+  function OnSelectHandler(selectedButton) {
+    console.log(selectedButton);
   }
 
   return (
@@ -29,10 +29,16 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={OnSelectHandler}>Components</TabButton>
-            <TabButton onSelect={OnSelectHandler}>JSX</TabButton>
-            <TabButton onSelect={OnSelectHandler}>Props</TabButton>
-            <TabButton onSelect={OnSelectHandler}>State</TabButton>
+            <TabButton onSelect={() => OnSelectHandler("components")}>
+              Components
+            </TabButton>
+            <TabButton onSelect={() => OnSelectHandler("jsx")}>JSX</TabButton>
+            <TabButton onSelect={() => OnSelectHandler("props")}>
+              Props
+            </TabButton>
+            <TabButton onSelect={() => OnSelectHandler("state")}>
+              State
+            </TabButton>
           </menu>
         </section>
       </main>
