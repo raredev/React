@@ -7,10 +7,23 @@ import { CORE_CONCEPTS, EXAMPLES } from "./data";
 
 function App() {
   // Registering a variable which is handled by react
-  const [initialButtonContent, setButtonContent] = useState("components"); // useState function or hook returns an array which contains exactly two elements
+  const [initialButtonContent, setButtonContent] = useState(); // useState function or hook returns an array which contains exactly two elements
 
   function OnSelectHandler(selectedButton) {
     setButtonContent(selectedButton);
+  }
+
+  let tabContent = <p>Please select one of the button</p>;
+  if (initialButtonContent) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[initialButtonContent]["title"]}</h3>
+        <p>{EXAMPLES[initialButtonContent]["description"]}</p>
+        <pre>
+          <code>{EXAMPLES[initialButtonContent]["code"]}</code>
+        </pre>
+      </div>
+    );
   }
 
   return (
@@ -45,13 +58,21 @@ function App() {
               State
             </TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[initialButtonContent]["title"]}</h3>
-            <p>{EXAMPLES[initialButtonContent]["description"]}</p>
-            <pre>
-              <code>{EXAMPLES[initialButtonContent]["code"]}</code>
-            </pre>
-          </div>
+          {/* One way of conditional rendering */}
+          {/* {!initialButtonContent ? (
+            <p>Please select one of the button</p>
+          ) : null}
+          {initialButtonContent && (
+            <div id="tab-content">
+              <h3>{EXAMPLES[initialButtonContent]["title"]}</h3>
+              <p>{EXAMPLES[initialButtonContent]["description"]}</p>
+              <pre>
+                <code>{EXAMPLES[initialButtonContent]["code"]}</code>
+              </pre>
+            </div>
+          )} */}
+          {/* Another way is to store the jsx content into a variable */}
+          {tabContent}
         </section>
       </main>
     </div>
