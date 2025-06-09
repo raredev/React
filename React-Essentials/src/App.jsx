@@ -47,14 +47,28 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={() => OnSelectHandler("components")}>
+            <TabButton
+              isSelected={initialButtonContent === "components"}
+              onSelect={() => OnSelectHandler("components")}
+            >
               Components
             </TabButton>
-            <TabButton onSelect={() => OnSelectHandler("jsx")}>JSX</TabButton>
-            <TabButton onSelect={() => OnSelectHandler("props")}>
+            <TabButton
+              isSelected={initialButtonContent === "jsx"}
+              onSelect={() => OnSelectHandler("jsx")}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              isSelected={initialButtonContent === "props"}
+              onSelect={() => OnSelectHandler("props")}
+            >
               Props
             </TabButton>
-            <TabButton onSelect={() => OnSelectHandler("state")}>
+            <TabButton
+              isSelected={initialButtonContent === "state"}
+              onSelect={() => OnSelectHandler("state")}
+            >
               State
             </TabButton>
           </menu>
