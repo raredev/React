@@ -1,11 +1,18 @@
+import { useState } from "react";
+
 import Header from "./components/Header/Header";
 import CoreConcept from "./components/CoreConcept/CoreConcept";
 import TabButton from "./components/TabButton/TabButton";
 import { CORE_CONCEPTS } from "./data";
 
 function App() {
+  // Registering a variable which is handled by react
+  const [initialButtonContent, setButtonContent] = useState(
+    "Please click a button"
+  ); // useState function or hook returns an array which contains exactly two elements
+
   function OnSelectHandler(selectedButton) {
-    console.log(selectedButton);
+    setButtonContent(selectedButton);
   }
 
   return (
@@ -40,6 +47,7 @@ function App() {
               State
             </TabButton>
           </menu>
+          {initialButtonContent}
         </section>
       </main>
     </div>
