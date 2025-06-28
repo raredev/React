@@ -1,7 +1,9 @@
-export default function Tabs({ children, buttons }) {
+// eslint-disable-next-line no-unused-vars
+export default function Tabs({ children, buttons, ButtonsContainer }) {
+  // const ButtonsContainer = buttonsContainer;
   return (
     <>
-      <menu>{buttons}</menu>
+      <ButtonsContainer>{buttons}</ButtonsContainer>
       {children}
     </>
   );
