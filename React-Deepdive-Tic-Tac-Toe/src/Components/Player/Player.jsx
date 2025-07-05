@@ -14,7 +14,7 @@ export default function Player({ name, symbol }) {
         {nameElement}
         <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={() => setEditing(!isEditing)}>
+      <button onClick={() => setEditing((editing) => !editing)}>
         {isEditing ? "Save" : "Edit"}
       </button>
     </li>
