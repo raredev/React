@@ -1,18 +1,33 @@
-const initialTiles = [
+import { useState } from "react";
+
+const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
 
 export default function GameBoard() {
+  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  function handleSquareClick(rowIndex, colIndex) {
+    setGameBoard((previousGameBoard) => {
+      const newGameBoard = previousGameBoard.map((innerElement) => [
+        ...innerElement,
+      ]); // Best Way of React Practice of updating the objects/array by creating a shallow copy
+      newGameBoard[rowIndex][colIndex] = "X";
+      console.log(newGameBoard);
+      return newGameBoard;
+    });
+  }
+
   return (
     <ol id="game-board">
-      {initialTiles.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((col, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => console.log("Button Clicked")}>
+                <button onClick={() => handleSquareClick(rowIndex, colIndex)}>
                   {col}
                 </button>
               </li>
