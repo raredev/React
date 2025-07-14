@@ -6,7 +6,7 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, activeSymbol }) {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   function handleSquareClick(rowIndex, colIndex) {
@@ -14,10 +14,10 @@ export default function GameBoard() {
       const newGameBoard = previousGameBoard.map((innerElement) => [
         ...innerElement,
       ]); // Best Way of React Practice of updating the objects/array by creating a shallow copy
-      newGameBoard[rowIndex][colIndex] = "X";
-      console.log(newGameBoard);
+      newGameBoard[rowIndex][colIndex] = activeSymbol;
       return newGameBoard;
     });
+    onSelectSquare();
   }
 
   return (
