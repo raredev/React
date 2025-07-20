@@ -3,16 +3,23 @@ import GameBoard from "./Components/GameBoard/GameBoard";
 import Log from "./Components/LogComponent/Log";
 import { useState } from "react";
 
-const turnsList = [];
-
 function App() {
   const [activePlayer, setActivePlayer] = useState("X");
+  const [turnsList, setTurnsList] = useState([]);
 
   function handleSwitchActivePlayer(rowIndex, colIndex) {
+    let currentPlayer = activePlayer;
+    setTurnsList((prevTurnsList) => {
+      const newTurnsList = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurnsList,
+      ];
+      return newTurnsList;
+    });
     setActivePlayer((prevActivePlayer) =>
       prevActivePlayer === "X" ? "O" : "X"
     );
-    turnsList.push(`${activePlayer}: row-${rowIndex + 1} col-${colIndex + 1}`);
+    // turnsList.push(`${activePlayer}: row-${rowIndex + 1} col-${colIndex + 1}`);
   }
 
   return (
@@ -24,7 +31,7 @@ function App() {
         </ol>
         <GameBoard
           onSelectSquare={handleSwitchActivePlayer}
-          activeSymbol={activePlayer}
+          turnsList={turnsList}
         />
       </div>
       <Log loggerList={turnsList} />
