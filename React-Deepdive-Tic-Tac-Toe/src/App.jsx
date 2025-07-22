@@ -20,6 +20,15 @@ function App() {
   function handleSwitchActivePlayer(rowIndex, colIndex) {
     // let currentPlayer = activePlayer;
     setTurnsList((prevTurnsList) => {
+      // Below condition is one way of dealing with clicking button once
+      // if (
+      //   prevTurnsList.length > 0 &&
+      //   prevTurnsList[0].square.row == rowIndex &&
+      //   prevTurnsList[0].square.col == colIndex &&
+      //   prevTurnsList[0].player != undefined
+      // ) {
+      //   return prevTurnsList;
+      // }
       const currentPlayer = getActivePlayer(prevTurnsList); // Why we are doing this? Just to get correct symbol since react schedules this call so just to be on safer side
       const newTurnsList = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
