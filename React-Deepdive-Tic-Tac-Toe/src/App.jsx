@@ -3,6 +3,14 @@ import GameBoard from "./Components/GameBoard/GameBoard";
 import Log from "./Components/LogComponent/Log";
 import { useState } from "react";
 
+import { WINNINGCOMBINATIONS } from "./combinations";
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 function getActivePlayer(turnsList) {
   let activePlayer = "X";
   if (turnsList.length > 0 && turnsList[0].player === "X") {
@@ -11,11 +19,41 @@ function getActivePlayer(turnsList) {
   return activePlayer;
 }
 
+function getWinner(turnsList) {
+  if (turnsList && turnsList.length > 4) {
+    for (const combination of WINNINGCOMBINATIONS) {
+      const firstSquare =
+        initialGameBoard[combination[0].row][combination[0].col];
+      const secondSquare =
+        initialGameBoard[combination[1].row][combination[1].col];
+      const thirdSquare =
+        initialGameBoard[combination[2].row][combination[2].col];
+
+      if (
+        firstSquare &&
+        firstSquare == secondSquare &&
+        firstSquare == thirdSquare
+      ) {
+        return firstSquare;
+      }
+    }
+  }
+  return false;
+}
+
 function App() {
   // const [activePlayer, setActivePlayer] = useState("X");
   const [turnsList, setTurnsList] = useState([]);
 
   const activePlayer = getActivePlayer(turnsList);
+
+  const isGameOver = getWinner(turnsList);
+
+  if (turnsList.length > 0) {
+    const { square, player } = turnsList[0];
+    const { row, col } = square;
+    initialGameBoard[row][col] = player;
+  }
 
   function handleSwitchActivePlayer(rowIndex, colIndex) {
     // let currentPlayer = activePlayer;
@@ -48,7 +86,7 @@ function App() {
         </ol>
         <GameBoard
           onSelectSquare={handleSwitchActivePlayer}
-          turnsList={turnsList}
+          board={initialGameBoard}
         />
       </div>
       <Log loggerList={turnsList} />
