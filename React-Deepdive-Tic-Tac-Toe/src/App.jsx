@@ -1,6 +1,7 @@
 import Player from "./Components/Player/Player";
 import GameBoard from "./Components/GameBoard/GameBoard";
 import Log from "./Components/LogComponent/Log";
+import GameOver from "./Components/GameOver/GameOver";
 import { useState } from "react";
 
 import { WINNINGCOMBINATIONS } from "./combinations";
@@ -31,12 +32,15 @@ function getWinner(turnsList) {
 
       if (
         firstSquare &&
-        firstSquare == secondSquare &&
-        firstSquare == thirdSquare
+        firstSquare === secondSquare &&
+        firstSquare === thirdSquare
       ) {
         return firstSquare;
       }
     }
+  }
+  if (turnsList.length === 9) {
+    return true;
   }
   return false;
 }
@@ -45,15 +49,14 @@ function App() {
   // const [activePlayer, setActivePlayer] = useState("X");
   const [turnsList, setTurnsList] = useState([]);
 
-  const activePlayer = getActivePlayer(turnsList);
-
-  const isGameOver = getWinner(turnsList);
-
   if (turnsList.length > 0) {
     const { square, player } = turnsList[0];
     const { row, col } = square;
     initialGameBoard[row][col] = player;
   }
+
+  const activePlayer = getActivePlayer(turnsList);
+  let isGameOver = getWinner(turnsList);
 
   function handleSwitchActivePlayer(rowIndex, colIndex) {
     // let currentPlayer = activePlayer;
@@ -88,6 +91,9 @@ function App() {
           onSelectSquare={handleSwitchActivePlayer}
           board={initialGameBoard}
         />
+        {isGameOver && (
+          <GameOver winner={isGameOver} isDraw={isGameOver === true} />
+        )}
       </div>
       <Log loggerList={turnsList} />
     </main>
