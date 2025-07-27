@@ -44,6 +44,10 @@ function getWinner(gameBoard, turnsList) {
 
 function App() {
   // const [activePlayer, setActivePlayer] = useState("X");
+  const [gamePlayers, setPlayers] = useState({
+    X: "Player 1",
+    O: "Player 2",
+  });
   const [turnsList, setTurnsList] = useState([]);
 
   const gameBoard = initialGameBoard.map((item) => [...item]);
@@ -82,12 +86,31 @@ function App() {
     setTurnsList([]);
   }
 
+  function handlePlayerChange(symbol, playerName) {
+    setPlayers((oldPlayers) => {
+      return {
+        ...oldPlayers,
+        [symbol]: playerName,
+      };
+    });
+  }
+
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
-          <Player name="Player 1" symbol="X" isActive={activePlayer === "X"} />
-          <Player name="Player 2" symbol="O" isActive={activePlayer === "O"} />
+          <Player
+            name="Player 1"
+            symbol="X"
+            isActive={activePlayer === "X"}
+            setPlayer={handlePlayerChange}
+          />
+          <Player
+            name="Player 2"
+            symbol="O"
+            isActive={activePlayer === "O"}
+            setPlayer={handlePlayerChange}
+          />
         </ol>
         <GameBoard
           onSelectSquare={handleSwitchActivePlayer}
@@ -95,7 +118,7 @@ function App() {
         />
         {isGameOver && (
           <GameOver
-            winner={isGameOver}
+            winner={gamePlayers[isGameOver]}
             isDraw={isGameOver === true}
             restartHandler={restartGame}
           />
