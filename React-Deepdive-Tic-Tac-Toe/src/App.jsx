@@ -20,15 +20,12 @@ function getActivePlayer(turnsList) {
   return activePlayer;
 }
 
-function getWinner(turnsList) {
+function getWinner(gameBoard, turnsList) {
   if (turnsList && turnsList.length > 4) {
     for (const combination of WINNINGCOMBINATIONS) {
-      const firstSquare =
-        initialGameBoard[combination[0].row][combination[0].col];
-      const secondSquare =
-        initialGameBoard[combination[1].row][combination[1].col];
-      const thirdSquare =
-        initialGameBoard[combination[2].row][combination[2].col];
+      const firstSquare = gameBoard[combination[0].row][combination[0].col];
+      const secondSquare = gameBoard[combination[1].row][combination[1].col];
+      const thirdSquare = gameBoard[combination[2].row][combination[2].col];
 
       if (
         firstSquare &&
@@ -49,14 +46,15 @@ function App() {
   // const [activePlayer, setActivePlayer] = useState("X");
   const [turnsList, setTurnsList] = useState([]);
 
-  if (turnsList.length > 0) {
-    const { square, player } = turnsList[0];
+  const gameBoard = initialGameBoard.map((item) => [...item]);
+  for (const turn of turnsList) {
+    const { square, player } = turn;
     const { row, col } = square;
-    initialGameBoard[row][col] = player;
+    gameBoard[row][col] = player;
   }
 
   const activePlayer = getActivePlayer(turnsList);
-  let isGameOver = getWinner(turnsList);
+  let isGameOver = getWinner(gameBoard, turnsList);
 
   function handleSwitchActivePlayer(rowIndex, colIndex) {
     // let currentPlayer = activePlayer;
@@ -80,6 +78,10 @@ function App() {
     // turnsList.push(`${activePlayer}: row-${rowIndex + 1} col-${colIndex + 1}`);
   }
 
+  function restartGame() {
+    setTurnsList([]);
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -89,10 +91,14 @@ function App() {
         </ol>
         <GameBoard
           onSelectSquare={handleSwitchActivePlayer}
-          board={initialGameBoard}
+          board={gameBoard}
         />
         {isGameOver && (
-          <GameOver winner={isGameOver} isDraw={isGameOver === true} />
+          <GameOver
+            winner={isGameOver}
+            isDraw={isGameOver === true}
+            restartHandler={restartGame}
+          />
         )}
       </div>
       <Log loggerList={turnsList} />

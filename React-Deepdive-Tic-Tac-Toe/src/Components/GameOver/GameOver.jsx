@@ -1,10 +1,9 @@
-export default function GameOver({ winner, isDraw }) {
-  debugger;
+export default function GameOver({ winner, isDraw, restartHandler }) {
   return (
     <div id="game-over">
       {!isDraw && <p>{winner} won!</p>}
       {isDraw && <p>It's a Draw</p>}
-      <button>Rematch!</button>
+      <button onClick={restartHandler}>Rematch!</button>
     </div>
   );
 }
