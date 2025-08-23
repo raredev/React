@@ -44,7 +44,9 @@ export default function AuthInputs() {
       </div>
       <div className="actions">
         <button type="button" className="text-button">
-          Create a new account
+          <p style={{ color: "green", fontSize: "17px" }}>
+            Create a new account
+          </p>
         </button>
         <button className="button" onClick={handleLogin}>
           Sign In
