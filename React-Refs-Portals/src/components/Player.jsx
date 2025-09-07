@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Player() {
   const [initialName, setName] = useState("");
-  const [isClicked, setClicked] = useState(false);
+  const input = useRef();
 
-  function onChangeHandler(ev) {
-    setName(ev.target.value);
+  function onClickHandler() {
+    setName(input.current.value);
   }
 
   return (
     <section id="player">
-      <h2>Welcome {isClicked ? initialName : "unknown entity"}</h2>
+      <h2>Welcome {initialName ? initialName : "unknown entity"}</h2>
       <p>
-        <input value={initialName} onChange={onChangeHandler} type="text" />
-        <button onClick={() => setClicked(true)}>Set Name</button>
+        <input ref={input} type="text" />
+        <button onClick={onClickHandler}>Set Name</button>
       </p>
     </section>
   );
