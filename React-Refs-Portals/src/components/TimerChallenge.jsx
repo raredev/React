@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function TimerChallenge({ title, targetTime }) {
-  const [isTimerOn, setTimerValue] = useState(false);
+  const timer = useRef();
+  const [isChallengeOn, setChallengeToggler] = useState(false);
+  const [isTimerExpired, setTimerExpired] = useState(false);
 
-  function onClickHandler() {
-    setTimerValue((prevValue) => !prevValue);
+  function startChallenge() {
+    setChallengeToggler(true);
+    setTimerExpired(false);
+    // Storing the timeout instance in timer ref
+    timer.current = setTimeout(() => {
+      setTimerExpired(true);
+      setChallengeToggler(false);
+    }, targetTime * 1000);
+  }
+
+  function stopChallenge() {
+    clearTimeout(timer.current); // This built in function clears the timeout with timer instance
+    setChallengeToggler(false);
   }
 
   return (
@@ -13,13 +26,14 @@ export default function TimerChallenge({ title, targetTime }) {
       <p className="challenge-time">
         {targetTime} second{targetTime > 1 && "s"}
       </p>
+      {isTimerExpired && <p>You Lost!</p>}
       <p>
-        <button onClick={onClickHandler}>
-          {isTimerOn ? "Stop" : "Start"}
+        <button onClick={isChallengeOn ? stopChallenge : startChallenge}>
+          {isChallengeOn ? "Stop Challenge" : "Start Challenge"}
         </button>
       </p>
-      <p className={isTimerOn && "active"}>
-        {isTimerOn ? "Timer is On" : "Timer Inactive"}
+      <p className={isChallengeOn ? "active" : ""}>
+        {isChallengeOn ? "Timer is running..." : "Timer is inactive"}
       </p>
     </section>
   );
