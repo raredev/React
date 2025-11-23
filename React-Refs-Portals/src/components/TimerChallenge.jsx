@@ -14,7 +14,7 @@ export default function TimerChallenge({ title, targetTime }) {
     timer.current = setTimeout(() => {
       setTimerExpired(true);
       setChallengeToggler(false);
-      modalRef.current.showModal();
+      modalRef.current.open();
     }, targetTime * 1000);
   }
 
